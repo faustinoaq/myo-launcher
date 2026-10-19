@@ -30,7 +30,7 @@ public class AppsActivity extends Activity {
         super.onCreate(savedInstanceState);
         LinearLayout column = new LinearLayout(this);
         column.setOrientation(LinearLayout.VERTICAL);
-        column.setBackground(Ui.background());
+        column.setBackground(Ui.background(this));
         column.setPadding(dp(this, 56), dp(this, 36), dp(this, 56), 0);
 
         boolean pick = getIntent().getBooleanExtra(EXTRA_PICK, false);

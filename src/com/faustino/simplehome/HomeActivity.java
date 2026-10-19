@@ -36,6 +36,7 @@ public class HomeActivity extends Activity {
     private TextView badge;
     private View firstTile;
     private LinearLayout mainRow;
+    private FrameLayout root;
     private ConnectivityManager connectivity;
     private ConnectivityManager.NetworkCallback networkCallback;
     private final NotificationService.Listener notificationListener =
@@ -51,6 +52,7 @@ public class HomeActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
+        root.setBackground(Ui.background(this));
         fillMainRow(null);
         networkCallback = new ConnectivityManager.NetworkCallback() {
             @Override
@@ -91,8 +93,7 @@ public class HomeActivity extends Activity {
     // ---- UI ----
 
     private View buildUi() {
-        FrameLayout root = new FrameLayout(this);
-        root.setBackground(Ui.background());
+        root = new FrameLayout(this);
         root.setClipChildren(false);
 
         LinearLayout column = new LinearLayout(this);
@@ -213,6 +214,7 @@ public class HomeActivity extends Activity {
         time.setTextColor(Color.WHITE);
         time.setTextSize(TypedValue.COMPLEX_UNIT_SP, 64);
         time.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
+        time.setShadowLayer(dp(this, 6), 0, dp(this, 2), 0x99000000);
         clock.addView(time);
         TextClock date = new TextClock(this);
         String datePattern = Ui.SPANISH ? "EEEE, d 'de' MMMM" : "EEEE, MMMM d";
@@ -220,6 +222,7 @@ public class HomeActivity extends Activity {
         date.setFormat24Hour(datePattern);
         date.setTextColor(Ui.TEXT_DIM);
         date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+        date.setShadowLayer(dp(this, 4), 0, dp(this, 1), 0x99000000);
         clock.addView(date);
         bar.addView(clock);
 

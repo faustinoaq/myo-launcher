@@ -63,7 +63,7 @@ public class SearchActivity extends Activity {
 
         LinearLayout column = new LinearLayout(this);
         column.setOrientation(LinearLayout.VERTICAL);
-        column.setBackground(Ui.background());
+        column.setBackground(Ui.background(this));
         column.setPadding(dp(this, 120), dp(this, 40), dp(this, 120), 0);
 
         LinearLayout box = new LinearLayout(this);

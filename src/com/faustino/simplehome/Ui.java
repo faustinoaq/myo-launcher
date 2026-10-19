@@ -7,7 +7,10 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.util.DisplayMetrics;
@@ -20,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -32,9 +36,9 @@ final class Ui {
 
     static final int BG_TOP = 0xFF10141B;
     static final int BG_BOTTOM = 0xFF1B2230;
-    static final int TILE = 0xFF232B38;
-    static final int TILE_FOCUSED = 0xFF34404F;
-    static final int TEXT_DIM = 0xFF9AA4B2;
+    static final int TILE = 0xC0232B38;
+    static final int TILE_FOCUSED = 0xE834404F;
+    static final int TEXT_DIM = 0xFFB4BDC9;
     static final int ACCENT = 0xFF5B9BFF;
 
     /** Developer tools that shouldn't show up as apps. */
@@ -53,7 +57,26 @@ final class Ui {
         return Math.round(value * a.getResources().getDisplayMetrics().density);
     }
 
-    static GradientDrawable background() {
+    private static Bitmap wallpaper;
+    private static long wallpaperStamp;
+
+    /**
+     * Screen background: background.jpg from the app's external files dir when present
+     * (pushed over adb, kept out of the repo), otherwise a dark gradient.
+     */
+    static Drawable background(Activity a) {
+        File file = new File(a.getExternalFilesDir(null), "background.jpg");
+        if (file.isFile()) {
+            if (wallpaper == null || wallpaperStamp != file.lastModified()) {
+                wallpaper = BitmapFactory.decodeFile(file.getPath());
+                wallpaperStamp = file.lastModified();
+            }
+            if (wallpaper != null) {
+                BitmapDrawable d = new BitmapDrawable(a.getResources(), wallpaper);
+                d.setGravity(Gravity.FILL);
+                return d;
+            }
+        }
         return new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, new int[]{BG_TOP, BG_BOTTOM});
     }
 
@@ -94,6 +117,7 @@ final class Ui {
         view.setText(text);
         view.setTextColor(color);
         view.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp);
+        view.setShadowLayer(dp(a, 3), 0, dp(a, 1), 0x99000000);
         view.setGravity(Gravity.CENTER);
         view.setSingleLine(true);
         view.setEllipsize(android.text.TextUtils.TruncateAt.END);

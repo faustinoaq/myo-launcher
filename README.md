@@ -36,6 +36,18 @@ adb shell cmd notification allow_listener com.faustino.simplehome/com.faustino.s
 adb shell appops set com.faustino.simplehome MANAGE_EXTERNAL_STORAGE allow   # file search
 ```
 
+## Custom background (optional)
+
+Push any 1280×720 JPEG. It's a good idea to blur and darken it first so the tiles stay readable. It isn't part of the repo, so personal photos stay on the TV:
+
+```sh
+convert photo.jpg -resize 1280x720^ -gravity center -extent 1280x720 \
+  -blur 0x8 -fill black -colorize 30% background.jpg
+adb push background.jpg /sdcard/Android/data/com.faustino.simplehome/files/background.jpg
+```
+
+Without it, the screens use a dark gradient.
+
 ## Debloat (optional)
 
 These packages were removed from this TV:

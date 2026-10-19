@@ -51,7 +51,7 @@ public class ResourcesActivity extends Activity {
         super.onCreate(savedInstanceState);
         LinearLayout column = new LinearLayout(this);
         column.setOrientation(LinearLayout.VERTICAL);
-        column.setBackground(Ui.background());
+        column.setBackground(Ui.background(this));
         column.setPadding(dp(this, 160), dp(this, 48), dp(this, 160), dp(this, 40));
 
         TextView title = Ui.label(this, t("Resources", "Recursos"), 34, Color.WHITE);
