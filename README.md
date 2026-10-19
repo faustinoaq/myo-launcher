@@ -65,7 +65,20 @@ done
 adb shell pm uninstall -k --user 0 com.sraf.launcher.ext
 ```
 
-Everything above can be undone with `pm enable <pkg>` or `cmd package install-existing <pkg>`.
+Hide Android Settings sections that don't apply to a TV (needs `adb root`, which works on this userdebug build). Fabricated overlays and component changes survive reboots:
+
+```sh
+adb root
+for b in top_level_battery top_level_connected_devices emergency_settings emergency_gesture_settings; do
+  adb shell cmd overlay fabricate --target com.android.settings --name hide_$b \
+    com.android.settings:bool/config_show_$b 0x12 0
+  adb shell cmd overlay enable com.android.shell:hide_$b
+done
+adb shell 'pm disable com.android.settings/.Settings\$WallpaperSettingsActivity'   # "Wallpaper" entry
+adb unroot
+```
+
+Everything above can be undone with `pm enable <pkg>`, `cmd package install-existing <pkg>`, or `cmd overlay disable com.android.shell:<name>`.
 
 ## Notes
 

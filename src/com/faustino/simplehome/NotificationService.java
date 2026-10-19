@@ -28,7 +28,10 @@ public class NotificationService extends NotificationListenerService {
         listeners.remove(l);
     }
 
-    /** Notifications worth showing: no ongoing ones (downloads, media sessions) and no group summaries. */
+    /**
+     * Notifications worth showing: only ones the user can clear (so "Clear all" always empties the list),
+     * which leaves out media players, downloads and foreground services, plus no group summaries.
+     */
     static List<StatusBarNotification> visible() {
         List<StatusBarNotification> out = new ArrayList<>();
         NotificationService s = instance;
@@ -42,7 +45,7 @@ public class NotificationService extends NotificationListenerService {
         if (active == null) return out;
         for (StatusBarNotification sbn : active) {
             Notification n = sbn.getNotification();
-            if (sbn.isOngoing() || (n.flags & Notification.FLAG_GROUP_SUMMARY) != 0) continue;
+            if (!sbn.isClearable() || (n.flags & Notification.FLAG_GROUP_SUMMARY) != 0) continue;
             out.add(sbn);
         }
         out.sort((a, b) -> Long.compare(b.getPostTime(), a.getPostTime()));
