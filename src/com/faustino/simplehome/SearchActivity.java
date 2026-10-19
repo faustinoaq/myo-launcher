@@ -64,7 +64,7 @@ public class SearchActivity extends Activity {
         LinearLayout column = new LinearLayout(this);
         column.setOrientation(LinearLayout.VERTICAL);
         column.setBackground(Ui.background(this));
-        column.setPadding(dp(this, 120), dp(this, 40), dp(this, 120), 0);
+        column.setPadding(dp(this, 108), dp(this, 40), dp(this, 108), 0);
 
         LinearLayout box = new LinearLayout(this);
         box.setOrientation(LinearLayout.HORIZONTAL);
@@ -87,11 +87,13 @@ public class SearchActivity extends Activity {
         input.setImeOptions(EditorInfo.IME_ACTION_SEARCH | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
         input.setPadding(dp(this, 16), dp(this, 14), 0, dp(this, 14));
         box.addView(input, new LinearLayout.LayoutParams(0, -2, 1f));
-        column.addView(box, new LinearLayout.LayoutParams(-1, dp(this, 60)));
+        LinearLayout.LayoutParams boxLp = new LinearLayout.LayoutParams(-1, dp(this, 60));
+        boxLp.setMargins(dp(this, 12), 0, dp(this, 12), 0);
+        column.addView(box, boxLp);
 
         status = Ui.label(this, "", 15, Ui.TEXT_DIM);
         status.setGravity(Gravity.START);
-        status.setPadding(dp(this, 22), dp(this, 12), 0, dp(this, 4));
+        status.setPadding(dp(this, 34), dp(this, 12), 0, dp(this, 4));
         column.addView(status);
 
         ScrollView scroll = new ScrollView(this);
@@ -99,6 +101,10 @@ public class SearchActivity extends Activity {
         scroll.setPadding(0, dp(this, 6), 0, dp(this, 24));
         results = new LinearLayout(this);
         results.setOrientation(LinearLayout.VERTICAL);
+        results.setClipChildren(false);
+        // Side inset inside the list (which the scroll view clips to) so a focused row's zoom and ring fit.
+        results.setClipToPadding(false);
+        results.setPadding(dp(this, 12), 0, dp(this, 12), 0);
         scroll.addView(results);
         column.addView(scroll, new LinearLayout.LayoutParams(-1, 0, 1f));
         setContentView(column);

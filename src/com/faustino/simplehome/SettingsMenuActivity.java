@@ -28,8 +28,9 @@ public class SettingsMenuActivity extends Activity {
         LinearLayout column = new LinearLayout(this);
         column.setOrientation(LinearLayout.VERTICAL);
         column.setBackground(Ui.background(this));
-        column.setPadding(dp(this, 56), dp(this, 36), dp(this, 56), 0);
+        column.setPadding(dp(this, 40), dp(this, 36), dp(this, 40), 0);
         column.setClipChildren(false);
+        column.setClipToPadding(false);
 
         TextView title = Ui.label(this, t("Settings", "Ajustes"), 34, Color.WHITE);
         title.setGravity(Gravity.START);
@@ -37,8 +38,10 @@ public class SettingsMenuActivity extends Activity {
 
         GridLayout grid = new GridLayout(this);
         grid.setColumnCount(COLUMNS);
+        // Room around the grid so the focused tile's 1.08 zoom and ring aren't cut at the edges.
         grid.setClipChildren(false);
-        grid.setPadding(0, dp(this, 22), 0, 0);
+        grid.setClipToPadding(false);
+        grid.setPadding(dp(this, 16), dp(this, 22), dp(this, 16), dp(this, 16));
         column.addView(grid, new LinearLayout.LayoutParams(-2, -2));
         ((LinearLayout.LayoutParams) grid.getLayoutParams()).gravity = Gravity.CENTER_HORIZONTAL;
 
@@ -62,8 +65,6 @@ public class SettingsMenuActivity extends Activity {
                 new Intent(Settings.ACTION_LOCALE_SETTINGS));
         add(grid, R.drawable.ic_accessibility, t("Accessibility", "Accesibilidad"),
                 new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
-        add(grid, R.drawable.ic_shield, t("Security & privacy", "Seguridad y privacidad"),
-                new Intent(Settings.ACTION_SECURITY_SETTINGS));
         add(grid, R.drawable.ic_location, t("Location", "Ubicación"),
                 new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
         add(grid, R.drawable.ic_account, t("Accounts", "Cuentas"),

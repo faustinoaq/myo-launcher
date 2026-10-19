@@ -75,6 +75,14 @@ for b in top_level_battery top_level_connected_devices emergency_settings emerge
   adb shell cmd overlay enable com.android.shell:hide_$b
 done
 adb shell 'pm disable com.android.settings/.Settings\$WallpaperSettingsActivity'   # "Wallpaper" entry
+# Nobody can set a screen-lock PIN: with no SystemUI there is no lock screen to type it into,
+# so a PIN would leave the TV unusable after a reboot.
+adb shell cmd overlay fabricate --target com.android.settings --name hide_unlock_set_or_change \
+  com.android.settings:bool/config_show_unlock_set_or_change 0x12 0
+adb shell cmd overlay enable com.android.shell:hide_unlock_set_or_change
+adb shell pm disable com.android.settings/.password.SetNewPasswordActivity
+adb shell device_config set_sync_disabled_for_tests persistent
+adb shell device_config put privacy safety_center_is_enabled false   # its "set up screen lock" card
 adb unroot
 ```
 

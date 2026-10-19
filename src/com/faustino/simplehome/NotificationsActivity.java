@@ -31,11 +31,16 @@ public class NotificationsActivity extends Activity implements NotificationServi
         LinearLayout column = new LinearLayout(this);
         column.setOrientation(LinearLayout.VERTICAL);
         column.setBackground(Ui.background(this));
-        column.setPadding(dp(this, 120), dp(this, 36), dp(this, 120), 0);
+        column.setPadding(dp(this, 108), dp(this, 36), dp(this, 108), 0);
+        column.setClipChildren(false);
 
         LinearLayout header = new LinearLayout(this);
         header.setOrientation(LinearLayout.HORIZONTAL);
         header.setGravity(Gravity.CENTER_VERTICAL);
+        // Inset so the focused button's zoom and ring aren't cut at the edges.
+        header.setPadding(dp(this, 12), 0, dp(this, 12), 0);
+        header.setClipChildren(false);
+        header.setClipToPadding(false);
         TextView title = Ui.label(this, t("Notifications", "Notificaciones"), 34, Color.WHITE);
         header.addView(title);
         header.addView(new android.view.View(this), new LinearLayout.LayoutParams(0, 1, 1f));
@@ -51,6 +56,10 @@ public class NotificationsActivity extends Activity implements NotificationServi
         scroll.setPadding(0, dp(this, 16), 0, dp(this, 24));
         list = new LinearLayout(this);
         list.setOrientation(LinearLayout.VERTICAL);
+        list.setClipChildren(false);
+        // Side inset inside the list (which the scroll view clips to) so a focused row's zoom and ring fit.
+        list.setClipToPadding(false);
+        list.setPadding(dp(this, 12), 0, dp(this, 12), 0);
         scroll.addView(list);
         column.addView(scroll, new LinearLayout.LayoutParams(-1, 0, 1f));
         setContentView(column);
