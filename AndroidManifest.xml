@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.faustino.simplehome" android:versionCode="4" android:versionName="1.3">
+    package="com.faustino.simplehome" android:versionCode="5" android:versionName="1.4">
     <uses-sdk android:minSdkVersion="30" android:targetSdkVersion="34"/>
     <uses-feature android:name="android.software.leanback" android:required="false"/>
     <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
@@ -27,6 +27,8 @@
         <activity android:name=".SearchActivity" android:exported="false"
             android:excludeFromRecents="true" android:screenOrientation="landscape"
             android:windowSoftInputMode="stateVisible|adjustNothing"/>
+        <activity android:name=".SettingsMenuActivity" android:exported="false"
+            android:excludeFromRecents="true" android:screenOrientation="landscape"/>
         <activity android:name=".ResourcesActivity" android:exported="false"
             android:excludeFromRecents="true" android:screenOrientation="landscape"/>
         <activity android:name=".NotificationsActivity" android:exported="false"

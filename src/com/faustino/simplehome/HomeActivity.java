@@ -114,8 +114,7 @@ public class HomeActivity extends Activity {
         utilRow.addView(utilTile(R.drawable.ic_apps, t("All apps", "Todas las apps"),
                 new Intent(this, AppsActivity.class)), spaced(150, 116, 10));
         utilRow.addView(utilTile(R.drawable.ic_settings, t("Settings", "Ajustes"),
-                Ui.explicit("com.android.settings", "com.android.settings.Settings"),
-                new Intent(Settings.ACTION_SETTINGS)), spaced(150, 116, 10));
+                new Intent(this, SettingsMenuActivity.class)), spaced(150, 116, 10));
         utilRow.addView(utilTile(R.drawable.ic_folder, t("Files", "Archivos"),
                 Ui.explicit("com.cultraview.filemanager", "com.cultraview.filemanager.FileManager")),
                 spaced(150, 116, 10));
